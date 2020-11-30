@@ -1,0 +1,19 @@
+Package: Math5773Stoh0001
+Type: Package
+Title: Project 3
+Version: 0.1.0
+Author: Hunter Stohlmeyer
+Maintainer: Hunter Stohlmeyer <hstohlmeyer@ou.edu>
+Description: Project 3
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+  s20x,
+  shiny,
+  boot,
+  MCMCpack,
+  mcmc,
+  bayesplot,
+  coda
+RoxygenNote: 7.1.1
