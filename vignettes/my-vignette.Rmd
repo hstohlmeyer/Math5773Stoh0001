@@ -1,0 +1,212 @@
+---
+title: "my-vignette"
+author: Hunter Stohlmeyer
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(Math5773Stoh0001)
+```
+
+# `validitycheck` Function
+
+This function checks the validity of the assumptions under multiple linear regression (MLR). 
+
+The four assumptions of MLR are:
+
+1. $E(\epsilon)=0$
+
+2. $V(E_i)=\sigma^2$
+
+3. $\epsilon$ is distributed normally.
+
+4. The random errors are independent. 
+
+To satisfy the assumption that $E(\epsilon)=0$ the mean of the residuals should equal 0. This function gives the mean of the residuals. To check the assumption that the variance is constant this function gives a plot of the residuals versus the fitted values. If there is a pattern in the graph this indicates that the assumption $V(E_i)=\sigma^2$ is violated. Next this function checks the normality of the residuals using the Shapiro-Wilk test. The Shapiro-Wilk test tests for normality. The null hypothesis of the Shapiro-Wilk test is that the errors are distributed normally. If the p value is greater than alpha of 0.05 then we fail to reject the null hypothesis and there is evidence to support the assumption that the errors are distributed normally. Lastly, this function evaluates the outliers in the data using Cook's Distance. This plot identifies potential outliers.
+
+## Input
+
+The only thing you need to input is the linear regression model.
+
+## Output
+
+This function returns the mean of the error term, a plot of the residuals vs. the fitted values to check the variance, a plot to test the assumption of the normality of the data, and a Cook's distance plot to examine outliers.
+
+## Example
+
+Here is an example of the `validitycheck` function using the camplake data found in `library(s20x)`
+
+```{r}
+library(s20x)
+data(camplake.df)
+head(camplake.df)
+camp.lm=lm(Length~Age+Scale.Radius,data=camplake.df)
+```
+
+```{r}
+validitycheck(model1=camp.lm)
+```
+
+We can see that the mean of the residuals is very close to zero reasonably satisfying the $E(\epsilon)=0$ assumption. There does not seem to be a pattern in the residuals vs fitted values reasonably satisfying the $V(E_i)=\sigma^2$ assumption. The p value of the Shapiro-Wilk test is greater than .05 so we fail to reject the null hypothesis and there is evidence to support the assumption that the errors are distributed normally. Lastly, the Cook's Distance Plot identifies observation numbers 33, 39, 52 as suspect outliers.
+
+# `Bootstrap` Function
+
+This function gives the $\beta$ parameter estimates and confidence intervals for the $\beta$ using bootsrapping and MLR.
+
+## General form of the multiple regression model
+
+$$y=\beta_0+\beta_1x_1+\beta_2x_2+...+\beta_kx_k+\epsilon$$
+
+The x terms can be quantitative variables, higher-order terms, coded variables representing qualitative variables, or interaction terms. $\epsilon$ accounts for the random error. The independent variables predict the mean value of y.
+
+## Method of least squares
+
+The method of least squares is used to fit the model. This method will choose the estimates of the parameters that minimize the sum of squared errors (SSE). Using matrix algebra we can obtain the estimates of the $\beta$ parameters.
+
+The least-squares solution is
+
+$$\hat{\beta}=(X'X)^{-1}X'Y$$
+
+The least-squares estimators provide unbiased estimates of the $\beta$ parameters [@mendhall].
+
+## Confidence Interval for $\hat{\beta_i}$
+
+A $(1-\alpha)100%$% CI for $\hat{\beta_i}$ is
+
+$\hat{\beta_i}\pm t_{\alpha/2}s\sqrt{c_{ii}}$ where $s\sqrt{c_{ii}}$ equals the estimated standard error of $\hat{\beta_i}$.
+
+## Input
+
+- alpha: confidence level
+
+- iter: number of iterations
+
+- model: linear regression model
+
+- data: dataset for model
+
+## Output
+
+- point and interval estimates based on level of alpha
+
+- distribution plot of estimates over the iterations
+
+- output of estimates and confidence intervals using classical analysis 
+
+## Example
+
+Here is an example of the `Bootstrap` function using the camplake data found in `library(s20x)`
+
+```{r}
+data(camplake.df)
+Bootstrap(alpha=.95,iter=10000,model=Length~Age+Scale.Radius,data=camplake.df)
+```
+
+The output shows us the estimates and confidence intervals for the bootstrapped parameters and for the parameters using multiple linear regression analysis. We can also see the distributions for the estimates using the bootstrap method. 
+
+# `Bayesian` function
+
+This function uses Bayesian statistics as well as the classical method to perform MLR.
+
+## Bayesian paradigm
+
+$$p(\theta|X) \propto p(\theta)f(x|\theta)$$
+
+The posterior is proportional to the prior times the likelihood.
+
+The $\beta$'s are given the following prior
+
+$$\beta\sim N(b_0, B_0^{-1})$$
+
+$$\sigma^{-2}\sim Gamma(c_0/2, d_0/2)$$
+
+$\sigma^{-2}$ is called the precision $\tau$ where
+
+$$\tau = \frac{1}{\sigma^2}$$
+
+## Input
+
+There are 3 things you need to input:
+
+- Model: linear regression model in the form of y~x1+x2...
+
+- Data: dataset
+
+- Alpha: confidence level
+
+## Output
+
+- Bayesian quantiles for each variable
+
+- Bayesian mean and standard deviation for each variable
+
+- Highest Posterior Density intervals
+
+- classical analysis summary
+
+- Confidence intervals for the estimates using classical analysis
+
+- posterior plots and diagnostics
+
+- posterior MCMC trace and histroy plots
+
+## Example
+
+Here is an example of the `Bayesian` function using the camplake data found in `library(s20x)`
+
+```{r}
+library(s20x)
+data(camplake.df)
+Bayesian(model=Length~Age+Scale.Radius,data=camplake.df,alpha=.95)
+```
+
+From the output we can see the quantiles and mean for each variable using Bayesian analysis and the estimates from the classical analysis. We can see the differences between the classical and Bayesian method for MLR. The output also shows the posterior plots and diagnostics and the posterior MCMC trace and history plots.
+
+# `ShinyMLR` function
+
+## General form of the multiple regression model
+
+$$y=\beta_0+\beta_1x_1+\beta_2x_2+...+\beta_kx_k+\epsilon$$
+
+The x terms can be quantitative variables, higher-order terms, coded variables representing qualitative variables, or interaction terms. $\epsilon$ accounts for the random error. The independent variables predict the mean value of y.
+
+## Method of least squares
+
+The method of least squares is used to fit the model. This method will choose the estimates of the parameters that minimize the sum of squared errors (SSE). Using matrix algebra we can obtain the estimates of the $\beta$ parameters.
+
+The least-squares solution is
+
+$$\hat{\beta}=(X'X)^{-1}X'Y$$
+
+The least-squares estimators provide unbiased estimates of the $\beta$ parameters.
+
+## Input
+
+- data: dataset to choose linear regression model
+
+## Output
+
+You choose the dependent and independent variables. 
+
+After choosing the dependent and independent variables, the output will show the summary of the regression analysis, the dependent and independent variables, a plot to test the assumption of normality, the mean of the error term, and confidence intervals for the estimates. 
+
+## Example
+
+Here is an example of the `ShinyMLR` function using the camplake data found in `library(s20x)`
+
+```{r}
+ShinyMLR(camplake.df)
+```
+
+Once we choose the dependent and independent variables, we can see the regression summary output which gives us the estimates. It also tells us the independent and dependent variables. It gives us the mean of the error term which is very small and the confidence intervals for the estimates. We can also see a plot to test the normality. The p value of the Shapiro-Wilk test is greater than .05 so we fail to reject the null hypothesis and there is evidence to support the assumption that the errors are distributed normally.
