@@ -15,5 +15,8 @@ Imports:
   MCMCpack,
   mcmc,
   bayesplot,
-  coda
+  coda,
+  readxl
 RoxygenNote: 7.1.1
+URL: https://github.com/hstohlmeyer/Math5773Stoh0001
+BugReports: https://github.com/hstohlmeyer/Math5773Stoh0001/issues

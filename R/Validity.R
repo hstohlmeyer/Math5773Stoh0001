@@ -8,16 +8,13 @@
 #' @export
 #'
 #' @examples
-#' library(s20x)
-#' data(camplake.df)
-#' camp.lm=lm(Length~Age+Scale.Radius,data=camplake.df)
-#' validitycheck(model1=camp.lm)
-#' data(books.df)
-#' book.lm=lm(length~book,data=books.df)
-#' validitycheck(model1=book.lm)
-#'
+#' quasar<-readxl::read_excel("C:/Users/hstoh/OneDrive - University of Oklahoma/Fall 2020/MATH 5773/Data/QUASAR.xls")
+#' quasar.lm=lm(RFEWIDTH~REDSHIFT+LINEFLUX+LUMINOSITY+AB1450,data=quasar)
+#' validitycheck(model1=quasar.lm)
+#' bub<-readxl::read_excel("C:/Users/hstoh/OneDrive - University of Oklahoma/Fall 2020/MATH 5773/Data/BUBBLE2.xls")
+#' bub.lm=lm(Density~Diameter+HeatFlux+MassFlux,data=bub)
+#' validitycheck(model1=bub.lm)
 validitycheck<-function(model1){
-  library(s20x)
   #varis=colnames(df)
   #xs=varis[varis!=y]
   #model <- paste0(y,"~", paste0(xs, collapse = '+'))
@@ -26,14 +23,14 @@ validitycheck<-function(model1){
   res=residuals(model1)
 
   #constant variance: residuals vs. fitted
-  eovcheck(model1,levene=TRUE)
+  s20x::eovcheck(model1,levene=TRUE)
 
   #mean of errors equal to 0
   print(c("Mean of errors",mean(res)))
 
   #check normality
-  normcheck(model1, shapiro.wilk = TRUE)
+  s20x::normcheck(model1, shapiro.wilk = TRUE)
 
   #outliers
-  cooks20x(model1)
+  s20x::cooks20x(model1)
 }

@@ -16,12 +16,10 @@ mean of the residuals, residuals vs. fitted plot, normality check, outliers
 This function can be used to check the assumptions of a multiple linear regression model.
 }
 \examples{
-library(s20x)
-data(camplake.df)
-camp.lm=lm(Length~Age+Scale.Radius,data=camplake.df)
-validitycheck(model1=camp.lm)
-data(books.df)
-book.lm=lm(length~book,data=books.df)
-validitycheck(model1=book.lm)
-
+quasar<-readxl::read_excel("C:/Users/hstoh/OneDrive - University of Oklahoma/Fall 2020/MATH 5773/Data/QUASAR.xls")
+quasar.lm=lm(RFEWIDTH~REDSHIFT+LINEFLUX+LUMINOSITY+AB1450,data=quasar)
+validitycheck(model1=quasar.lm)
+bub<-readxl::read_excel("C:/Users/hstoh/OneDrive - University of Oklahoma/Fall 2020/MATH 5773/Data/BUBBLE2.xls")
+bub.lm=lm(Density~Diameter+HeatFlux+MassFlux,data=bub)
+validitycheck(model1=bub.lm)
 }
