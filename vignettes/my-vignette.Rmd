@@ -45,20 +45,19 @@ This function returns the mean of the error term, a plot of the residuals vs. th
 
 ## Example
 
-Here is an example of the `validitycheck` function using the camplake data found in `library(s20x)`
+Here is an example of the `validitycheck` function using sludge data on methane emissions from wastewater sludge.
 
 ```{r}
-library(s20x)
-data(camplake.df)
-head(camplake.df)
-camp.lm=lm(Length~Age+Scale.Radius,data=camplake.df)
+sludge<-readxl::read_excel("C:/Users/hstoh/OneDrive - University of Oklahoma/Fall 2020/MATH 5773/Data/SLUDGE.xls")
+head(sludge)
+sludge.lm=lm(CH4~sludge$`VHA-Added`+TIME+sludge$`VHA-Added`:TIME, data=sludge)
 ```
 
 ```{r}
-validitycheck(model1=camp.lm)
+validitycheck(model1=sludge.lm)
 ```
 
-We can see that the mean of the residuals is very close to zero reasonably satisfying the $E(\epsilon)=0$ assumption. There does not seem to be a pattern in the residuals vs fitted values reasonably satisfying the $V(E_i)=\sigma^2$ assumption. The p value of the Shapiro-Wilk test is greater than .05 so we fail to reject the null hypothesis and there is evidence to support the assumption that the errors are distributed normally. Lastly, the Cook's Distance Plot identifies observation numbers 33, 39, 52 as suspect outliers.
+We can see that the mean of the residuals is very close to zero reasonably satisfying the $E(\epsilon)=0$ assumption. There does not seem to be a pattern in the residuals vs fitted values reasonably satisfying the $V(E_i)=\sigma^2$ assumption. The p value of the Shapiro-Wilk test is greater than .05 so we fail to reject the null hypothesis and there is evidence to support the assumption that the errors are distributed normally. Lastly, the Cook's Distance Plot identifies observation numbers 23, 26, 27 as suspect outliers.
 
 # `Bootstrap` Function
 
@@ -106,11 +105,10 @@ $\hat{\beta_i}\pm t_{\alpha/2}s\sqrt{c_{ii}}$ where $s\sqrt{c_{ii}}$ equals the 
 
 ## Example
 
-Here is an example of the `Bootstrap` function using the camplake data found in `library(s20x)`
+Here is an example of the `Bootstrap` function using the sludge data on methane emissions from wastewater sludge.
 
 ```{r}
-data(camplake.df)
-Bootstrap(alpha=.95,iter=10000,model=Length~Age+Scale.Radius,data=camplake.df)
+Bootstrap(alpha=.95,iter=10000,model=CH4~sludge$`VHA-Added`+TIME+sludge$`VHA-Added`:TIME, data=sludge)
 ```
 
 The output shows us the estimates and confidence intervals for the bootstrapped parameters and for the parameters using multiple linear regression analysis. We can also see the distributions for the estimates using the bootstrap method. 
@@ -173,12 +171,10 @@ There are 3 things you need to input:
 
 ## Example
 
-Here is an example of the `Bayesian` function using the camplake data found in `library(s20x)`
+Here is an example of the `Bayesian` function using the sludge data on methane emissions from wastewater sludge.
 
 ```{r}
-library(s20x)
-data(camplake.df)
-Bayesian(model=Length~Age+Scale.Radius,data=camplake.df,alpha=.95)
+Bayesian(CH4~sludge$`VHA-Added`+TIME+sludge$`VHA-Added`:TIME, data=sludge,alpha=.95)
 ```
 
 From the output we can see the quantiles and mean for each variable using Bayesian analysis and the estimates from the classical analysis. We can see the differences between the classical and Bayesian method for MLR. The output also shows the posterior plots and diagnostics and the posterior MCMC trace and history plots.
@@ -213,10 +209,10 @@ After choosing the dependent and independent variables, the output will show the
 
 ## Example
 
-Here is an example of the `ShinyMLR` function using the camplake data found in `library(s20x)`
+Here is an example of the `ShinyMLR` function using the sludge data on methane emissions from wastewater sludge.
 
 ```{r}
-ShinyMLR(camplake.df)
+ShinyMLR(sludge)
 ```
 
 Once we choose the dependent and independent variables, we can see the regression summary output which gives us the estimates. It also tells us the independent and dependent variables. It gives us the mean of the error term which is very small and the confidence intervals for the estimates. We can also see a plot to test the normality. The p value of the Shapiro-Wilk test is greater than .05 so we fail to reject the null hypothesis and there is evidence to support the assumption that the errors are distributed normally.
