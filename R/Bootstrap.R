@@ -1,4 +1,6 @@
-#' Bootstrap MLR
+#' @title Bootstrap MLR
+#'
+#' @description This function uses bootstrapping to create estimates and confidence intervals for the parameters of a multiple linear regression model.
 #'
 #' @param alpha confidence level
 #' @param iter iterations

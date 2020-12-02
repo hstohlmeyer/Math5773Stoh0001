@@ -1,6 +1,6 @@
-#' Check MLR assumptions
+#' @title Check MLR assumptions
 #'
-#' This function can be used to check the assumptions of a multiple linear regression model.
+#' @description This function can be used to check the assumptions of a multiple linear regression model.
 #'
 #' @param model1 MLR model
 #'

@@ -21,7 +21,7 @@ Bayesian(model, data, alpha, burn = 1000, mc = 10000)
 Bayesian estimates, classical estimates, posterior plots and diagnostics
 }
 \description{
-Comparison of Bayesian and classical MLR
+This function estimates the parameters in a multiple linear regression model using Bayesian and classical analysis.
 }
 \examples{
 quasar<-readxl::read_excel("C:/Users/hstoh/OneDrive - University of Oklahoma/Fall 2020/MATH 5773/Data/QUASAR.xls")

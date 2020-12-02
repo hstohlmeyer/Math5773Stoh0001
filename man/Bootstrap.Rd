@@ -19,7 +19,7 @@ Bootstrap(alpha, iter, model, data)
 Bootstrap beta estimates, CIs, and plots of point estimates; MLR summary and CIs
 }
 \description{
-Bootstrap MLR
+This function uses bootstrapping to create estimates and confidence intervals for the parameters of a multiple linear regression model.
 }
 \examples{
 quasar<-readxl::read_excel("C:/Users/hstoh/OneDrive - University of Oklahoma/Fall 2020/MATH 5773/Data/QUASAR.xls")

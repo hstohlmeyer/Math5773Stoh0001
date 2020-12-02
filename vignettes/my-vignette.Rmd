@@ -78,7 +78,7 @@ The least-squares solution is
 
 $$\hat{\beta}=(X'X)^{-1}X'Y$$
 
-The least-squares estimators provide unbiased estimates of the $\beta$ parameters [@mendhall].
+The least-squares estimators provide unbiased estimates of the $\beta$ parameters.
 
 ## Confidence Interval for $\hat{\beta_i}$
 
@@ -121,9 +121,13 @@ This function uses Bayesian statistics as well as the classical method to perfor
 
 ## Bayesian paradigm
 
+Whereas the classical paradigm is based on $X|\theta$ to create its formulae and interpretations, the Bayesian paradigm is based on $\theta|X$.
+
+The goal in Bayesian statistics is to obtain the posterior $p(\theta|X)$.
+
 $$p(\theta|X) \propto p(\theta)f(x|\theta)$$
 
-The posterior is proportional to the prior times the likelihood.
+The posterior is proportional to the prior $p(\theta)$ and the likelihood $f(x|\theta)$.
 
 The $\beta$'s are given the following prior
 
@@ -134,6 +138,12 @@ $$\sigma^{-2}\sim Gamma(c_0/2, d_0/2)$$
 $\sigma^{-2}$ is called the precision $\tau$ where
 
 $$\tau = \frac{1}{\sigma^2}$$
+
+Bayesian statistics usually uses the posterior mean as the point estimate because it minimizes the mean posterior squared error.
+
+$$\hat{\theta} = E(\theta|x)=\mu_{\theta|x}$$
+
+Interval estimates can be developed using the Bayesian Credible Intervals $BCI=[\theta_{\alpha/2}, \theta_{1-\alpha/2}]$ or Highest Density Intervals $HDI = [\theta_L, \theta_U]$.
 
 ## Input
 

@@ -1,7 +1,7 @@
 
-#' Shiny MLR
+#' @title Shiny MLR
 #'
-#' Input your data and then using the Shiny server you can choose your dependent and
+#' @description Input your data and then using the Shiny server you can choose your dependent and
 #' independent variables.
 #'
 #' @param data dataset

@@ -1,4 +1,6 @@
-#' Comparison of Bayesian and classical MLR
+#' @title Comparison of Bayesian and classical MLR
+#'
+#' @description This function estimates the parameters in a multiple linear regression model using Bayesian and classical analysis.
 #'
 #' @param model model
 #' @param data dataset
